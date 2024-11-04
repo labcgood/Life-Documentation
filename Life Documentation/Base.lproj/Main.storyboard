@@ -20,8 +20,8 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OaU-4B-KEK">
                                 <rect key="frame" x="98.333333333333329" y="38.333333333333343" width="196.33333333333337" height="190.33333333333331"/>
-                                <color key="backgroundColor" red="0.49803921568627452" green="0.63137254901960782" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.39215686274509803" green="0.50980392156862742" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" red="0.49803921569999998" green="0.63137254899999995" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <imageReference key="image" image="person.fill" catalog="system" symbolScale="small"/>
                             </imageView>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="cNI-Px-Bft">
@@ -54,7 +54,7 @@
                                                 <rect key="frame" x="0.0" y="176" width="313" height="34.333333333333343"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="註冊會員">
-                                                    <color key="baseForegroundColor" red="1" green="0.95686274510000002" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eJ8-ga-B0M"/>
@@ -75,7 +75,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.49803921569999998" green="0.63137254899999995" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="awF-3p-km7" secondAttribute="bottom" constant="10" id="IZg-K2-dSh"/>
                                     <constraint firstItem="awF-3p-km7" firstAttribute="top" secondItem="cNI-Px-Bft" secondAttribute="top" constant="10" id="SAP-TM-Eer"/>
@@ -85,6 +85,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ec8-wu-ePi">
                                 <rect key="frame" x="255.33333333333334" y="192.33333333333334" width="39.333333333333343" height="39.333333333333343"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
                                     <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
@@ -153,6 +154,7 @@
                                 <buttonConfiguration key="configuration" style="plain">
                                     <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="35"/>
+                                    <color key="baseForegroundColor" name="AccentColor"/>
                                 </buttonConfiguration>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0qL-T2-jqL" userLabel="Profile Image View">
@@ -165,10 +167,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FvA-Zu-ZwI">
-                                <rect key="frame" x="16" y="735" width="58" height="35"/>
+                                <rect key="frame" x="167" y="780" width="58" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="登出"/>
+                                <buttonConfiguration key="configuration" style="filled" title="登出">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="logOut:" destination="hvV-mx-Vrp" eventType="touchUpInside" id="tEc-tL-naZ"/>
                                 </connections>
@@ -239,7 +244,7 @@
                                                 <rect key="frame" x="0.0" y="88" width="313" height="34.333333333333343"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="登入">
-                                                    <color key="baseForegroundColor" red="1" green="0.95686274510000002" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="logIn:" destination="43E-PX-OeV" eventType="touchUpInside" id="1fF-9t-Asc"/>
@@ -278,7 +283,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="註冊">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
-                                            <color key="baseForegroundColor" red="0.39215686274509803" green="0.50980392156862742" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="baseForegroundColor" name="AccentColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <segue destination="BYZ-38-t0r" kind="show" id="x52-vd-yLg"/>
@@ -334,14 +339,14 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="OzJ-65-swk"/>
-        <segue reference="S9f-Wd-gOR"/>
+        <segue reference="HTg-Dg-QgZ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon去背" width="1024" height="1024"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="AccentColor">
-            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.3919999897480011" green="0.50999999046325684" blue="0.67799997329711914" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

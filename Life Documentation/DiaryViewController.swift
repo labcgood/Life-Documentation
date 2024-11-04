@@ -22,9 +22,9 @@ class DiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 隱藏返回鍵
-        self.navigationItem.hidesBackButton = true
-        updateUI()
+        
+        self.navigationItem.hidesBackButton = true // 隱藏返回鍵
+        updateUI() // 初始化畫面
         
         // 確保 userID存在，呼叫 fetchUserInfo方法抓取使用者資訊(userInfo)，成功後呼叫updateUserInfo來更新畫面
         guard let userID = auth.currentUser?.uid else {
@@ -97,23 +97,10 @@ class DiaryViewController: UIViewController {
             try auth.signOut()
             print("\(auth.currentUser?.uid ?? "")已登出")
         } catch {
-            let alert = UIAlertController(title: "錯誤", message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true)
+            showAlert(title: "錯誤", message: error.localizedDescription)
         }
         
         // 返回登入畫面
         performSegue(withIdentifier: "toLogInViewController", sender: self)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

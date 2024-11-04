@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseFirestore
 import Firebase
 import FirebaseAuth
 
@@ -18,7 +17,6 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     let auth = Auth.auth()
-    var activeTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,15 +51,14 @@ class LogInViewController: UIViewController {
         }
     }
     
-    // 登入功能
+    // 登入功能 - 在「登入」Button裡呼叫
     func logIn(email: String, password: String) {
+        // 使用signIn方法來登入使用者（這是Firebase的方法）
         auth.signIn(withEmail: email, password: password) { Result, error in
             if let error {
                 print("登入失敗：\(error.localizedDescription)")
                 print("email:\(email),password:\(password)")
-                let alert = UIAlertController(title: "錯誤", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
+                self.showAlert(title: "錯誤", message: error.localizedDescription)
             } else {
                 print("用戶登入成功，ID：\(self.auth.currentUser?.uid ?? "")")
                 self.performSegue(withIdentifier: "logInSuccsToDiaryViewController", sender: self)
@@ -69,9 +66,14 @@ class LogInViewController: UIViewController {
         }
     }
     
-    // 登入按鍵（ 呼叫logIn() ）
+    // 登入（ 呼叫logIn() ）
     @IBAction func logIn(_ sender: Any) {
-        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        // 確保資料填寫完整
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text,!password.isEmpty else {
+            self.showAlert(title: "資料填寫不完整", message: nil)
+            return
+        }
         logIn(email: email, password: password)
     }
 }

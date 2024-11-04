@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseFirestore
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
@@ -23,6 +22,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var checkPasswordTextField: UITextField!
     
+    var haveProfileImage = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardNotification() //監聽鍵盤活動
@@ -36,20 +37,13 @@ class RegisterViewController: UIViewController {
     
     // 設定UI
     func updateUI() {
-        // 頭貼設定
+        // 頭貼imageView設定
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         
         // 輸入框背景view設定
         frameView.clipsToBounds = true
         frameView.layer.cornerRadius = 10
-    }
-    
-    // 顯示提示、警告
-    func showAlert(title: String?, message: String?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "好的", style: .default))
-        present(alert, animated: true)
     }
     
     // 選擇頭貼
@@ -61,26 +55,32 @@ class RegisterViewController: UIViewController {
     
     // 註冊帳號
     @IBAction func signUp(_ sender: Any) {
+        
+        // 先判斷密碼與確認密碼是否一致、是否設定頭貼、資料是否皆填妥
+        // 以上沒有問題就呼叫registerUser來註冊帳號
         if passwordTextField.text != checkPasswordTextField.text {
             showAlert(title: "密碼確認失敗", message: "請檢查密碼是否輸入一致")
             print("密碼確認失敗")
-        } else if profileImageView.image == UIImage(systemName: "person.fill") {
+        } else if haveProfileImage == false {
             showAlert(title: "請設定頭貼", message: nil)
             print("未設定頭貼")
         } else {
-            registerUser(name: (nameTextField.text ?? ""), email: (emailTextField.text ?? ""), password: (passwordTextField.text ?? ""))
+            // 先檢查使用者是否已填妥資料，並取得TextField輸入的資料
+            guard let name = nameTextField.text, !name.isEmpty,
+                  let email = emailTextField.text, !email.isEmpty,
+                  let password = passwordTextField.text, !password.isEmpty else {
+                showAlert(title: "資料填寫不完整", message: nil)
+                print("資料填寫不完整")
+                return
+            }
+            registerUser(name: name, email: email, password: password)
         }
     }
     
     // 創建使用者 - 在「註冊帳號」Button裡呼叫
     func registerUser(name: String ,email: String, password: String) {
-        // 先檢查使用者是否已填妥資料
-        guard !name.isEmpty, !email.isEmpty, !password.isEmpty else {
-            showAlert(title: "資料填寫不完整", message: nil)
-            print("資料填寫不完整")
-            return
-        }
         
+        // 使用Auth.auth()的createUser方法來註冊使用者（這是Firebase的方法）
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             // 通知：註冊失敗
             if let error {
@@ -93,19 +93,20 @@ class RegisterViewController: UIViewController {
             self.showAlert(title: "註冊成功", message: nil)
             print("註冊成功，使用者ID：\(authResult?.user.uid ?? "")")
             
-            // 確保資料（為了方便使用資料，這邊都先做確保）
+            // 確保資料（為了方便使用資料，這邊都先用guard let做確保）
             // 在「註冊帳號」Button裡會確定使用者有選取頭貼
             guard let profileImage = self.profileImageView.image else {
                 print("錯誤：頭貼缺失")
                 return
             }
-            // 上面已經註冊成功，這邊應該要有使用者 ID
+            // 上面已經註冊成功，這邊應該要有使用者 ID，所以使用 authResult來取得 ID
             guard let userID = authResult?.user.uid else {
                 print("錯誤：無法取得使用者ID")
                 return
             }
             
             // 呼叫上傳頭貼的function，以取得頭貼的url
+            // 用switch方法來判斷成功跟失敗要做什麼事
             self.uploadProfileImage(userID: userID, profileImage: profileImage) { result in
                 switch result {
                 // 成功：取得 url後就呼叫 saveUserInfo方法，將使用者的 userName跟 profileImageUrl上傳到 firestore database裡儲存，方便以後使用者登入都可以抓取使用
@@ -154,16 +155,16 @@ class RegisterViewController: UIViewController {
                     print("錯誤（頭貼url取得失敗）：\(error.localizedDescription)")
                     return
                 }
-                // 成功：成功取得url後，返回該 url給調用方
-                if let downloadURL = url?.absoluteString {
-                    completion(.success(downloadURL))
+                // 成功：成功取得url的字串後，返回該 url給調用方
+                if let downloadURLString = url?.absoluteString {
+                    completion(.success(downloadURLString))
                     print("頭貼上傳成功")
                 }
             }
         }
     }
     
-    // 儲存使用者資料到firebase(firestore database)
+    // 儲存使用者資料到firebase(存到firestore database裡)
     func saveUserInfo(userID: String, userName: String, profileImageUrlString: String, completion: @escaping (Error?) -> Void) {
         // 在firestore建立資料夾
         let db = Firestore.firestore()
@@ -182,11 +183,14 @@ class RegisterViewController: UIViewController {
     }
 }
 
+
+// 擴展RegisterViewController，取得選取相片的功能
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 從相簿裡選擇頭貼相片
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         profileImageView.image = info[.originalImage] as? UIImage
+        haveProfileImage = true
         dismiss(animated: true)
     }
 }

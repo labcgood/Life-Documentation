@@ -6,6 +6,7 @@
 //
 import UIKit
 
+// 因為偵測鍵盤的方法在很多地方都可以用到，如果在每個controller都要寫一次的話會讓code太多，所以直接用擴展的方式處理
 // 擴展 UIViewController，用來處理鍵盤通知
 extension UIViewController {
     
@@ -55,5 +56,15 @@ extension UIViewController {
             }
         }
         return nil
+    }
+}
+
+// 因為重複在各個View Controller中使用到AlertController，且用法簡單，所以直接擴展在UIViewController裡方便使用
+extension UIViewController {
+    // 顯示提示、警告
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "好的", style: .default))
+        present(alert, animated: true)
     }
 }
