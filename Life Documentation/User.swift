@@ -10,5 +10,5 @@ import Foundation
 // 從firebase下載使用者資料時可以建立User儲存資料
 struct User {
     var userName: String?
-    var userProfileImageUrlString: String?
+    var userProfileImageURLString: String?
 }

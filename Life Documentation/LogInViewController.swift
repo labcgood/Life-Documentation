@@ -29,6 +29,11 @@ class LogInViewController: UIViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+    
+    // 畫面消失時解除監聽
+    override func viewDidDisappear(_ animated: Bool) {
+        removeKeyboardNotification()
+    }
 
     // 設定UI
     func updateUI() {

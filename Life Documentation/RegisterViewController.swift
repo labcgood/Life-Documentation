@@ -35,6 +35,11 @@ class RegisterViewController: UIViewController {
         view.endEditing(true)
     }
     
+    // 畫面消失時解除監聽
+    override func viewDidDisappear(_ animated: Bool) {
+        removeKeyboardNotification()
+    }
+    
     // 設定UI
     func updateUI() {
         // 頭貼imageView設定
@@ -130,7 +135,8 @@ class RegisterViewController: UIViewController {
     // 上傳頭貼圖片
     func uploadProfileImage(userID: String, profileImage: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
         // 建立 storage文件夾
-        let storageRef = Storage.storage().reference().child("userInfo/\(userID)/profilePicture.jpg")
+        let storageRef = Storage.storage().reference().child("\(userID)/userInfo/profilePicture.jpg")
+        
         
         // 將 UIImage轉換成 JPEG格式的 Data，以便上傳
         // compressionQuality設定為 0.8，表示圖像的壓縮品質為 80%。數值範圍是 0.0 到 1.0，數值越高，品質越好，檔案越大

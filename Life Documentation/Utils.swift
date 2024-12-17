@@ -17,6 +17,12 @@ extension UIViewController {
         center.addObserver(self, selector: #selector(keyboardHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    // 移除監聽，減少記憶體洩漏的風險
+    func removeKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     // 鍵盤出現時將 view 上移
     @objc func keyboardShown(notification: Notification) {
         guard let activeTextField = findActiveTextField(in: self.view) else { return }
