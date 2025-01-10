@@ -23,10 +23,7 @@ class DiariesTableViewCell: UITableViewCell {
         dateLabel.font = UIFont.boldSystemFont(ofSize: 20)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-
+    // cell內元件設定
     func updateUI(show diary : DiaryContent) {
         let dateTextArray: [String] = diary.diaryDate.components(separatedBy: "-")
         let showDateString = dateTextArray[0] + "\n" + dateTextArray[1] + "-" + dateTextArray[2]

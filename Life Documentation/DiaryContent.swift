@@ -10,5 +10,7 @@ import Foundation
 struct DiaryContent {
     var diaryDate: String
     var diaryImageURLString: String?
+    var diaryImageID: String?
     var diaryText: String?
+    var diaryID: String?
 }
